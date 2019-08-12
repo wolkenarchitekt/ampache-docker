@@ -1,57 +1,42 @@
-FROM ubuntu:14.04
+FROM ubuntu:18.04
 MAINTAINER Afterster
 
-RUN echo 'deb http://download.videolan.org/pub/debian/stable/ /' >> /etc/apt/sources.list
-RUN echo 'deb-src http://download.videolan.org/pub/debian/stable/ /' >> /etc/apt/sources.list
-RUN echo 'deb http://archive.ubuntu.com/ubuntu trusty main multiverse' >> /etc/apt/sources.list
-
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install wget inotify-tools
-RUN wget -O - https://download.videolan.org/pub/debian/videolan-apt.asc|sudo apt-key add -
-RUN apt-get update
-
-# Need this environment variable otherwise mysql will prompt for passwords
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install mysql-server apache2 wget php5 php5-json php5-curl php5-mysqlnd pwgen lame libvorbis-dev vorbis-tools flac libmp3lame-dev libavcodec-extra* libfaac-dev libtheora-dev libvpx-dev libav-tools git
-
-# Install composer for dependency management
-RUN php -r "readfile('https://getcomposer.org/installer');" | php && \
-    mv composer.phar /usr/local/bin/composer
-
-# For local testing / faster builds
-# COPY master.tar.gz /opt/master.tar.gz
-ADD https://github.com/ampache/ampache/archive/master.tar.gz /opt/ampache-master.tar.gz
-ADD ampache.cfg.php.dist /var/temp/ampache.cfg.php.dist
-
-# extraction / installation
-RUN rm -rf /var/www/* && \
-    tar -C /var/www -xf /opt/ampache-master.tar.gz ampache-master --strip=1 && \
-    cd /var/www && composer install --prefer-source --no-interaction && \
-    chown -R www-data /var/www
-
-# setup mysql like this project does it: https://github.com/tutumcloud/tutum-docker-mysql
-# Remove pre-installed database
-
-RUN rm -rf /var/lib/mysql/*
-ADD create_mysql_admin_user.sh /create_mysql_admin_user.sh
-ADD run.sh /run.sh
-RUN chmod 755 /*.sh
+ENV DEBIAN_FRONTEND=noninteractive
 ENV MYSQL_PASS **Random**
-# Add VOLUMEs to allow backup of config and databases
-VOLUME  ["/etc/mysql", "/var/lib/mysql"]
 
-# setup apache with default ampache vhost
+ADD create_mysql_admin_user.sh run.sh /
+ADD ampache.cfg.php.dist /var/temp/ampache.cfg.php.dist
 ADD 001-ampache.conf /etc/apache2/sites-available/
-RUN rm -rf /etc/apache2/sites-enabled/*
-RUN ln -s /etc/apache2/sites-available/001-ampache.conf /etc/apache2/sites-enabled/
-RUN a2enmod rewrite
 
-# Add job to cron to clean the library every night
-RUN echo '30 7    * * *   www-data php /var/www/bin/catalog_update.inc' >> /etc/crontab
+RUN     chmod 0755 /*.sh \
+    &&  apt-get -q -q update \
+    &&  apt-get -q -q -y install --no-install-recommends wget gnupg ca-certificates \
+    &&  echo 'deb http://download.videolan.org/pub/debian/stable/ /' >> /etc/apt/sources.list.d/videolan.list \
+    &&  wget -qO - https://download.videolan.org/pub/debian/videolan-apt.asc | apt-key add - \
+    &&  apt-get -q -q update \
+    &&  apt-get -q -q -y upgrade --no-install-recommends \
+    &&  apt-get -q -q -y install --no-install-recommends \
+          inotify-tools mysql-server apache2 php php-json \
+          php-curl php-mysql php-gd php-xml composer libev-libevent-dev \
+          pwgen lame libvorbis-dev vorbis-tools flac \
+          libmp3lame-dev libfaac-dev libtheora-dev libvpx-dev \
+          libavcodec-extra ffmpeg git cron \
+    &&  mkdir -p /var/run/mysqld \
+    &&  chown -R mysql /var/run/mysqld \
+    &&  rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* \
+    &&  wget -qO - https://github.com/ampache/ampache/archive/master.tar.gz \
+          | tar -C /var/www -xzf - ampache-master --strip=1 \
+    &&  chown -R www-data:www-data /var/www \
+    &&  chmod -R 775 /var/www \
+    &&  su -s /bin/sh -c 'cd /var/www && composer install --prefer-source --no-interaction' www-data \
+    &&  apt-get purge -q -q -y --autoremove git wget ca-certificates gnupg composer \
+    &&  ln -s /etc/apache2/sites-available/001-ampache.conf /etc/apache2/sites-enabled/ \
+    &&  a2enmod rewrite \
+    &&  rm -rf /var/cache/* /tmp/* /var/tmp/* /root/.cache /var/www/.composer \
+    &&  find /var/www -type d -name '.git' -print0 | xargs -0 -L1 -- rm -rf \
+    &&  echo '30 7 * * *   /usr/bin/php /var/www/bin/catalog_update.inc' | crontab -u www-data -
 
-VOLUME ["/media"]
-VOLUME ["/var/www/config"]
-VOLUME ["/var/www/themes"]
+VOLUME ["/etc/mysql", "/var/lib/mysql", "/media", "/var/www/config", "/var/www/themes"]
 EXPOSE 80
 
 CMD ["/run.sh"]
