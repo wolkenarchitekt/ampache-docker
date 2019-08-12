@@ -5,10 +5,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV MYSQL_PASS **Random**
 
 ADD create_mysql_admin_user.sh run.sh /
-ADD ampache.cfg.php.dist /var/temp/ampache.cfg.php.dist
 ADD 001-ampache.conf /etc/apache2/sites-available/
+COPY ampache.cfg.* /var/temp/
 
 RUN     chmod 0755 /*.sh \
+    &&  chmod +x /*.sh \
     &&  apt-get -q -q update \
     &&  apt-get -q -q -y install --no-install-recommends wget gnupg ca-certificates \
     &&  echo 'deb http://download.videolan.org/pub/debian/stable/ /' >> /etc/apt/sources.list.d/videolan.list \
