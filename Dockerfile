@@ -26,7 +26,7 @@ RUN     chmod 0755 /*.sh \
     &&  chown -R mysql /var/run/mysqld \
     &&  rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* \
     &&  wget -qO - https://github.com/ampache/ampache/archive/develop.tar.gz \
-          | tar -C /var/www -xzf - ampache-master --strip=1 \
+          | tar -C /var/www -xzf - ampache-develop --strip=1 \
     &&  mv /var/www/rest/.htac* /var/www/rest/.htaccess \
     &&  mv /var/www/play/.htac* /var/www/play/.htaccess \
     &&  mv /var/www/channel/.htac* /var/www/channel/.htaccess \
