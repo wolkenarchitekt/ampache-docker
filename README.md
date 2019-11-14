@@ -5,6 +5,19 @@ Docker container for Ampache, a web based audio/video streaming application and 
 ![travis status](https://travis-ci.org/arielelkin/ampache-docker.svg?branch=master)
 
 ## Usage
+
+The recommended way to run ampache-docker is by using the current github packages.
+
+To run the current Ampache master (stable) branch
+```bash
+docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 docker.pkg.github.com/ampache/ampache-docker/ampache:latest
+```
+To run the current Ampache develop branch
+```bash
+docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 docker.pkg.github.com/ampache/ampache-docker/ampache:develop
+```
+
+To run using the docker hub image (NOT RECOMMENDED! It's years out of date.)
 ```bash
 docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/ampache
 ```
