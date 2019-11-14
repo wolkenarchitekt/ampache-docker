@@ -27,7 +27,9 @@ RUN     chmod 0755 /*.sh \
     &&  rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* \
     &&  wget -qO - https://github.com/ampache/ampache/archive/master.tar.gz \
           | tar -C /var/www -xzf - ampache-master --strip=1 \
-    &&  for f in rest play channel; do mv /var/www/$f/.htac* /var/www/$f/.htaccess; done;
+    &&  mv /var/www/rest/.htac* /var/www/rest/.htaccess \
+    &&  mv /var/www/play/.htac* /var/www/play/.htaccess \
+    &&  mv /var/www/channel/.htac* /var/www/channel/.htaccess \
     &&  chown -R www-data:www-data /var/www \
     &&  chmod -R 775 /var/www \
     &&  su -s /bin/sh -c 'cd /var/www && composer install --prefer-source --no-interaction' www-data \
