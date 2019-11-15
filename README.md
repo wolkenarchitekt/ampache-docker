@@ -6,23 +6,16 @@ Docker container for Ampache, a web based audio/video streaming application and 
 
 ## Usage
 
-The recommended way to run ampache-docker is by using the current github packages or from my ![personal docker hub page](https://hub.docker.com/repository/docker/lachlan00/ampache) These are official builds from the github repo.
+To run official builds from docker hub you can run these commands:
 
-To run official builds from docker hub you can run this command
-```bash
-docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 lachlan00/ampache:latest
-```
 To run the current Ampache master (stable) branch
 ```bash
-docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 docker.pkg.github.com/ampache/ampache-docker/ampache:latest
+docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/ampache
 ```
+
 To run the current Ampache develop branch
 ```bash
-docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 docker.pkg.github.com/ampache/ampache-docker/ampache:develop
-```
-To run using the old docker hub image (NOT RECOMMENDED! It's years out of date.)
-```bash
-docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/ampache
+docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 lachlan00/ampache:develop
 ```
 
 ## Installation
