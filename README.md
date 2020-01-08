@@ -19,8 +19,8 @@ docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 lachlan00
 ```
 
 ## Installation
-- MySQL Administrative Username: root # leave alone
-- MySQL Administrative Password:      # (blank) leave alone
+- MySQL Administrative Username: root    # leave alone
+- MySQL Administrative Password: (blank) # leave alone
 - Check "Create Database User"
 - Ampache Database Username: ampache
 - Ampache Database User Password: ampache # or whatever you want, but remember it on the next page
