@@ -18,6 +18,16 @@ To run the current Ampache develop branch
 docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 lachlan00/ampache:develop
 ```
 
+## Running on ARM
+
+The automated builds for the official repo are only built for amd64. (For the moment)
+To allow Raspberry Pi/Arm users to use Amapche there are builds available from my personal repo.
+
+lachlan00/ampache:develop also includes these extra architectures.
+```bash
+docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 lachlan00/ampache
+```
+
 ## Installation
 - MySQL Administrative Username: root    # leave alone
 - MySQL Administrative Password: (blank) # leave alone
