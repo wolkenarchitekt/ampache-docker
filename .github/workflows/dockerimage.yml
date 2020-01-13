@@ -1,6 +1,7 @@
 name: Docker Image CI master
 
-on: push:
+on:
+  push:
     branches:    
     - master
 
