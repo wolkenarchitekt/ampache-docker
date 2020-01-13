@@ -1,9 +1,9 @@
-name: Docker Image CI master
+name: Docker Image CI develop
 
 on:
   push:
     branches:    
-    - master
+    - develop
 
 jobs:
 
@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ampache:latest
+      run: docker build . --file Dockerfile --tag ampache:develop
