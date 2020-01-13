@@ -15,8 +15,12 @@ docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/a
 
 To run the current Ampache develop branch
 ```bash
-docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 lachlan00/ampache:develop
+docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/ampache:develop
 ```
+
+## Running on ARM
+
+The automated builds for the official repo are now built for linux/amd64, linux/arm/v7 and linux/arm64.
 
 ## Installation
 - MySQL Administrative Username: root # leave alone
