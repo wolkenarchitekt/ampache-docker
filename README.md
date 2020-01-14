@@ -18,6 +18,8 @@ To run the current Ampache develop branch
 docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/ampache:develop
 ```
 
+The develop tag is set up to use git updates so you don't have to rebuild your images to stay up to date with development.
+
 ## Running on ARM
 
 The automated builds for the official repo are now built for linux/amd64, linux/arm/v7 and linux/arm64.
