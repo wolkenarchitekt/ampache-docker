@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER lachlan-00
+LABEL maintainer="lachlan-00"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV MYSQL_PASS **Random**
