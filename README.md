@@ -6,6 +6,10 @@ Docker container for Ampache, a web based audio/video streaming application and 
 
 ![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=master)
 
+**Develop build status**
+
+![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=develop)
+
 ## Usage
 
 To run official builds from docker hub you can run these commands:
