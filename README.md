@@ -2,7 +2,13 @@
 
 Docker container for Ampache, a web based audio/video streaming application and file manager allowing you to access your music & videos from anywhere, using almost any internet enabled device.
 
-![travis status](https://travis-ci.org/arielelkin/ampache-docker.svg?branch=master)
+**build status**
+
+![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=master)
+
+**Develop build status**
+
+![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=develop)
 
 ## Usage
 
