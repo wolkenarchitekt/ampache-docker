@@ -2,7 +2,13 @@
 
 Docker container for Ampache, a web based audio/video streaming application and file manager allowing you to access your music & videos from anywhere, using almost any internet enabled device.
 
-![travis status](https://travis-ci.org/arielelkin/ampache-docker.svg?branch=master)
+**build status**
+
+![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=master)
+
+**Develop build status**
+
+![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=develop)
 
 ## Usage
 
@@ -17,6 +23,8 @@ To run the current Ampache develop branch
 ```bash
 docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/ampache:develop
 ```
+
+The develop tag is set up to use git updates so you don't have to rebuild your images to stay up to date with development.
 
 ## Running on ARM
 
@@ -38,4 +46,4 @@ The automated builds for the official repo are now built for linux/amd64, linux/
 
 ## Current Release
 
-4.1.1-develop
+4.2.0-develop
