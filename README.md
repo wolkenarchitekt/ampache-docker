@@ -46,4 +46,4 @@ The automated builds for the official repo are now built for linux/amd64, linux/
 
 ## Current Release
 
-4.3.0-develop
+Ampache develop
