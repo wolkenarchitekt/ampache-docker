@@ -1,8 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-VOLUME_HOME="/var/lib/mysql"
-
-if [[ ! -d $VOLUME_HOME/mysql ]]; then
+if [[ ! -d /var/lib/mysql/mysql ]]; then
     echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
     echo "=> Installing MySQL ..."
     mysqld --defaults-file=/etc/mysql/my.cnf --initialize-insecure
