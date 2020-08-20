@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  ampache:
+    image: ampache:old
+    container_name: ampache
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      #- ./data/music:/media
+      - db:/var/lib/mysql
+      - conf:/var/www/config
+      #- ./data/log:/var/log/ampache
+
+volumes:
+  conf:
+  db:
