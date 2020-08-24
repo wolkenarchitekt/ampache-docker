@@ -68,7 +68,7 @@ RUN     apt-get -qq purge git composer
 VOLUME ["/etc/mysql", "/var/lib/mysql", "/media", "/var/www/config", "/var/www/themes"]
 EXPOSE 80
 
-COPY run.sh inotifywatch.sh cron.sh apache2.sh mysql.sh create_mysql_admin_user.sh /usr/local/bin
+COPY run.sh inotifywatch.sh cron.sh apache2.sh mysql.sh create_mysql_admin_user.sh /usr/local/bin/
 COPY 001-ampache.conf /etc/apache2/sites-available/
 COPY --chown=www-data:www-data ampache.cfg.* /var/temp/
 COPY docker-entrypoint.sh /usr/local/bin
