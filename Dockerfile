@@ -16,7 +16,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV MYSQL_PASS **Random**
 
 RUN     apt-get -q -q update \
-    &&  apt-get -q -q -y install --no-install-recommends software-properties-common
+    &&  apt-get -q -q -y install --no-install-recommends \
+          software-properties-common
 RUN     apt-add-repository contrib \
     &&  apt-add-repository non-free
 RUN     apt-get -q -q update \
@@ -52,6 +53,12 @@ RUN     apt-get update \
           supervisor \
           vorbis-tools \
           zip
+RUN     apt-get -qq purge \
+          libdvd-pkg \
+          lsb-release \
+          python3 \
+          python3-minimal \
+          software-properties-common
 RUN     rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* /var/lib/apt/lists/* \
     &&  mkdir -p /var/run/mysqld \
     &&  chown -R mysql /var/run/mysqld \
