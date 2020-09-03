@@ -10,6 +10,10 @@ Docker container for Ampache, a web based audio/video streaming application and 
 
 ![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=develop)
 
+## noSQL build status
+
+![travis status](https://travis-ci.org/ampache/ampache-docker.svg?branch=nosql)
+
 ## Usage
 
 ### docker run
@@ -34,7 +38,7 @@ To run the current Ampache develop branch
 docker run --name=ampache -d -v /path/to/your/music:/media:ro -p 80:80 ampache/ampache:develop
 ```
 
-The develop tag is set up to use git updates so you don't have to rebuild your images to stay up to date with development.
+~~The develop tag is set up to use git updates so you don't have to rebuild your images to stay up to date with development.~~
 
 ### docker-compose
 
@@ -47,10 +51,10 @@ docker-compose up -d
 The first time you run the container, you will also need to set the correct permissions on the configuration folder:
 
 ```bash
-chown www-data:www-data conf -R
+chown www-data:www-data ./data/config -R
 ```
 
-This will automatically create mount points for music at `./data/music`, persistent MySQL storage at `./data/mysql`, and a folder for the Ampache configuration file at `/conf`.
+This will automatically create mount points for music at `./data/media`, persistent MySQL storage at `./data/mysql`, and a folder for the Ampache configuration file at `./data/config`.
 
 ## Running on ARM
 
@@ -79,6 +83,7 @@ The automated builds for the official repo are now built for linux/amd64, linux/
 
 * @ericfrederich for his original work
 * @velocity303 and @goldy for the other ampache-docker inspiration
+* @kuzi-moto for bringing the image out of the dark ages
 
 ## Current Release
 
