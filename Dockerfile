@@ -1,9 +1,7 @@
 FROM composer:1.10.8 AS Builder
 
-ADD https://github.com/ampache/ampache/archive/develop.tar.gz /tmp
-RUN     tar -xzf /tmp/develop.tar.gz --strip=1 -C .
-RUN     apk add --no-cache php-intl icu-dev \
-    &&  docker-php-ext-install intl
+ADD https://github.com/ampache/ampache/archive/master.tar.gz /tmp
+RUN     tar -xzf /tmp/master.tar.gz --strip=1 -C .
 RUN     composer install --prefer-source --no-interaction
 RUN     rm -rf .git* .php_cs .sc .scrutinizer.yml .tgitconfig .travis.yml .tx *.md \
     &&  mv ./rest/.htac* ./rest/.htaccess \
@@ -45,7 +43,6 @@ RUN     apt-get update \
           php \
           php-curl \
           php-gd \
-          php-intl \
           php-json \
           php-mysql \
           php-xml \
