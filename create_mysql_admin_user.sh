@@ -1,6 +1,7 @@
 #!/bin/bash
 
-/usr/bin/mysqld_safe > /dev/null 2>&1 &
+mysqld_safe &
+sleep 5
 
 RET=1
 while [[ RET -ne 0 ]]; do
