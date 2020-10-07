@@ -1,9 +1,9 @@
 FROM composer:1.10.8 AS Builder
 
 ADD https://github.com/ampache/ampache/archive/master.tar.gz /tmp
-RUN     tar -xzf /tmp/master.tar.gz --strip=1 -C .
-RUN     composer install --prefer-source --no-interaction
-RUN     rm -rf .git* .php_cs .sc .scrutinizer.yml .tgitconfig .travis.yml .tx *.md \
+RUN     tar -xzf /tmp/master.tar.gz --strip=1 -C . \
+    &&  composer install --prefer-source --no-interaction \
+    &&  rm -rf .git* .php_cs .sc .scrutinizer.yml .tgitconfig .travis.yml .tx *.md \
     &&  mv ./rest/.htac* ./rest/.htaccess \
     &&  mv ./play/.htac* ./play/.htaccess \
     &&  mv ./channel/.htac* ./channel/.htaccess \
@@ -17,13 +17,13 @@ ENV MYSQL_PASS **Random**
 
 RUN     apt-get -q -q update \
     &&  apt-get -q -q -y install --no-install-recommends \
-          software-properties-common
-RUN     apt-add-repository contrib \
-    &&  apt-add-repository non-free
-RUN     apt-get -q -q update \
-    &&  apt-get -q -q -y install --no-install-recommends libdvd-pkg
-RUN     dpkg-reconfigure libdvd-pkg
-RUN     apt-get update \
+          software-properties-common \
+    &&  apt-add-repository contrib \
+    &&  apt-add-repository non-free \
+    &&  apt-get -q -q update \
+    &&  apt-get -q -q -y install --no-install-recommends libdvd-pkg \
+    &&  dpkg-reconfigure libdvd-pkg \
+    &&  apt-get update \
     &&  apt-get -qq install --no-install-recommends \
           apache2 \
           cron \
@@ -49,8 +49,8 @@ RUN     apt-get update \
           pwgen \
           supervisor \
           vorbis-tools \
-          zip
-RUN     rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* /var/lib/apt/lists/* \
+          zip \
+    &&  rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* /var/lib/apt/lists/* \
     &&  mkdir -p /var/run/mysqld \
     &&  chown -R mysql /var/run/mysqld \
     &&  ln -s /etc/apache2/sites-available/001-ampache.conf /etc/apache2/sites-enabled/ \
@@ -64,8 +64,8 @@ RUN     apt-get -qq purge \
           lsb-release \
           python3 \
           python3-minimal \
-          software-properties-common
-RUN     apt-get -qq autoremove
+          software-properties-common \
+    &&  apt-get -qq autoremove
 
 VOLUME ["/etc/mysql", "/var/lib/mysql", "/media", "/var/www/config", "/var/www/themes"]
 EXPOSE 80
