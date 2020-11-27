@@ -1,14 +1,3 @@
-FROM composer:1.10.8 AS Builder
-
-ADD https://github.com/ampache/ampache/archive/master.tar.gz /tmp
-RUN     tar -xzf /tmp/master.tar.gz --strip=1 -C . \
-    &&  composer install --prefer-source --no-interaction \
-    &&  rm -rf .git* .php_cs .sc .scrutinizer.yml .tgitconfig .travis.yml .tx *.md \
-    &&  mv ./rest/.htac* ./rest/.htaccess \
-    &&  mv ./play/.htac* ./play/.htaccess \
-    &&  mv ./channel/.htac* ./channel/.htaccess \
-    &&  chmod -R 775 .
-
 FROM debian:stable
 LABEL maintainer="lachlan-00"
 
@@ -50,16 +39,24 @@ RUN     apt-get -q -q update \
           supervisor \
           vorbis-tools \
           zip \
+          unzip \
     &&  rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* /var/lib/apt/lists/* \
+    &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/4.2.4/ampache-4.2.4_all.zip \
+    &&  unzip /tmp/master.zip -d /var/www/ \
+    &&  mv /var/www/rest/.htac* /var/www/rest/.htaccess \
+    &&  mv /var/www/play/.htac* /var/www/play/.htaccess \
+    &&  mv /var/www/channel/.htac* /var/www/channel/.htaccess \
+    &&  rm -rf /var/www/.git* /var/www/.php_cs /var/www/.sc /var/www/.scrutinizer.yml \
+          /var/www/.tgitconfig /var/www/.travis.yml /var/www/.tx /var/www/*.md \
+    &&  chown -R www-data:www-data /var/www \
+    &&  chmod -R 775 /var/www \
     &&  mkdir -p /var/run/mysqld \
     &&  chown -R mysql /var/run/mysqld \
     &&  ln -s /etc/apache2/sites-available/001-ampache.conf /etc/apache2/sites-enabled/ \
     &&  a2enmod rewrite \
     &&  rm -rf /var/cache/* /tmp/* /var/tmp/* /root/.cache /var/www/docs \
-    &&  echo '30 7 * * *   /usr/bin/php /var/www/bin/catalog_update.inc' | crontab -u www-data -
-
-COPY --from=Builder --chown=www-data:www-data /app /var/www
-RUN     apt-get -qq purge \
+    &&  echo '30 7 * * *   /usr/bin/php /var/www/bin/catalog_update.inc' | crontab -u www-data - \
+    &&  apt-get -qq purge \
           libdvd-pkg \
           lsb-release \
           python3 \
