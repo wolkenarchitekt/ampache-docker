@@ -41,7 +41,7 @@ RUN     apt-get -q -q update \
           zip \
           unzip \
     &&  rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* /var/lib/apt/lists/* \
-    &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/4.2.4/ampache-4.2.4_all.zip \
+    &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/4.2.5/ampache-4.2.5_all.zip \
     &&  unzip /tmp/master.zip -d /var/www/ \
     &&  mv /var/www/rest/.htac* /var/www/rest/.htaccess \
     &&  mv /var/www/play/.htac* /var/www/play/.htaccess \
