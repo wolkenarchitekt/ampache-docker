@@ -3,6 +3,7 @@ LABEL maintainer="lachlan-00"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV MYSQL_PASS **Random**
+ARG VERSION=4.2.5
 
 RUN     apt-get -q -q update \
     &&  apt-get -q -q -y install --no-install-recommends \
@@ -41,7 +42,7 @@ RUN     apt-get -q -q update \
           zip \
           unzip \
     &&  rm -rf /var/lib/mysql/* /var/www/* /etc/apache2/sites-enabled/* /var/lib/apt/lists/* \
-    &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/4.2.5/ampache-4.2.5_all.zip \
+    &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/${VERSION}/ampache-${VERSION}_all.zip \
     &&  unzip /tmp/master.zip -d /var/www/ \
     &&  mv /var/www/rest/.htac* /var/www/rest/.htaccess \
     &&  mv /var/www/play/.htac* /var/www/play/.htaccess \
