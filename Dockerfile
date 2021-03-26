@@ -3,7 +3,7 @@ LABEL maintainer="lachlan-00"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV MYSQL_PASS **Random**
-ARG VERSION=4.4.0
+ARG VERSION=4.4.1
 
 RUN     apt-get -q -q update \
     &&  apt-get -q -q -y install --no-install-recommends \
