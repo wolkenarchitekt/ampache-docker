@@ -59,7 +59,7 @@ RUN     apt-get -q -q update \
           /var/www/.tgitconfig /var/www/.travis.yml /var/www/.tx /var/www/*.md \
     &&  find /var/www -type d -name ".git*" -print0 | xargs -0 rm -rf {} \
     &&  chown -R www-data:www-data /var/www \
-    &&  chmod -R 775 /var/www \ - \
+    &&  chmod -R 775 /var/www \
     &&  apt-get -qq purge \
           libdvd-pkg \
           lsb-release \
