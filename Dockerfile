@@ -48,8 +48,6 @@ RUN     apt-get -q -q update \
     &&  chown -R mysql /var/run/mysqld \
     &&  ln -s /etc/apache2/sites-available/001-ampache.conf /etc/apache2/sites-enabled/ \
     &&  a2enmod rewrite \
-    &&  rm -rf /var/cache/* /tmp/* /var/tmp/* /root/.cache /var/www/docs \
-    &&  echo '30 * * * *   /usr/local/bin/ampache_cron.sh' | crontab -u www-data - \
     &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/${VERSION}/ampache-${VERSION}_all.zip \
     &&  unzip /tmp/master.zip -d /var/www/ \
     &&  mv /var/www/rest/.htac* /var/www/rest/.htaccess \
@@ -60,6 +58,8 @@ RUN     apt-get -q -q update \
     &&  find /var/www -type d -name ".git*" -print0 | xargs -0 rm -rf {} \
     &&  chown -R www-data:www-data /var/www \
     &&  chmod -R 775 /var/www \
+    &&  rm -rf /var/cache/* /tmp/* /var/tmp/* /root/.cache /var/www/docs \
+    &&  echo '30 * * * *   /usr/local/bin/ampache_cron.sh' | crontab -u www-data - \
     &&  apt-get -qq purge \
           libdvd-pkg \
           lsb-release \
