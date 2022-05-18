@@ -82,7 +82,7 @@ COPY data/bin/run.sh data/bin/inotifywait.sh data/bin/cron.sh data/bin/apache2.s
 COPY data/sites-enabled/001-ampache.conf /etc/apache2/sites-available/
 COPY data/config/ampache.cfg.* /var/tmp/
 COPY data/logrotate.d/* /etc/logrotate.d/
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY data/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN  chown www-data:www-data /var/tmp/ampache.cfg.* \
     &&  chmod +x /usr/local/bin/*.sh
