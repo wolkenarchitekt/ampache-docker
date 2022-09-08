@@ -36,15 +36,14 @@ RUN     apt-get -q -q update \
           locales \
           logrotate \
           mariadb-server \
-          php7.4 \
-          php7.4-curl \
-          php7.4-gd \
-          php7.4-intl \
-          php7.4-json \
-          php7.4-ldap \
-          php7.4-mysql \
-          php7.4-xml \
-          php7.4-zip \
+          php8.1 \
+          php8.1-curl \
+          php8.1-gd \
+          php8.1-intl \
+          php8.1-ldap \
+          php8.1-mysql \
+          php8.1-xml \
+          php8.1-zip \
           pwgen \
           supervisor \
           vorbis-tools \
@@ -57,7 +56,7 @@ RUN     apt-get -q -q update \
     &&  chown -R www-data:www-data /var/log/ampache \
     &&  ln -s /etc/apache2/sites-available/001-ampache.conf /etc/apache2/sites-enabled/ \
     &&  a2enmod rewrite \
-    &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/${VERSION}/ampache-${VERSION}_all.zip \
+    &&  wget -q -O /tmp/master.zip https://github.com/ampache/ampache/releases/download/${VERSION}/ampache-${VERSION}_all_php8.1.zip \
     &&  unzip /tmp/master.zip -d /var/www/ \
     &&  cp -f /var/www/public/rest/.htaccess.dist /var/www/public/rest/.htaccess \
     &&  cp -f /var/www/public/play/.htaccess.dist /var/www/public/play/.htaccess \
